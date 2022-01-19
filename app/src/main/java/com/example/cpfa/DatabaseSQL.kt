@@ -41,6 +41,10 @@ class DatabaseSQL{
 
     fun getSelect(memes : String) : String {
 
+        if(memes.equals("count")){
+            return getCount()
+        }
+
         var name = ""
         if (connection == null || connection?.isClosed == true) {
 
@@ -66,6 +70,39 @@ class DatabaseSQL{
             }
 
     return name.toString()
+    }
+
+
+
+
+    fun getCount() : String {
+
+
+        var name = ""
+        if (connection == null || connection?.isClosed == true) {
+
+            return ""
+        }
+
+
+        try {
+            connection!!.createStatement().use { s ->
+                s.executeQuery("SELECT COUNT (*) FROM Memes").use {
+
+                    while (it.next()) {
+                        name = it.getString("count")
+
+
+                    }
+
+
+                }
+            }
+        } catch (e: SQLException) {
+            Log.e(this::class.toString(), e.message, e)
+        }
+
+        return name.toString()
     }
 
 }

@@ -17,7 +17,7 @@ public class UpdatesChecker extends Thread {
     public void run() {
 
             db = new DatabaseSQL();
-            String rawansw = db.getString("1");
+            String rawansw = db.getString("count");
             System.out.println("Raw - "  +  rawansw);
             int answer = Integer.parseInt(rawansw);
 
