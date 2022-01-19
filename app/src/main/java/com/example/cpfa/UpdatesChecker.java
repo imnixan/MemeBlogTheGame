@@ -1,9 +1,12 @@
 package com.example.cpfa;
 
 
+import java.util.ArrayList;
+
 public class UpdatesChecker extends Thread {
     UpdateCallback updateCallback;
-
+    DatabaseSQL db;
+    static public ArrayList<String> mems = new ArrayList<>();
 
     UpdatesChecker(UpdateCallback updateCallback) {
         this.updateCallback = updateCallback;
@@ -12,18 +15,28 @@ public class UpdatesChecker extends Thread {
 
     @Override
     public void run() {
-        try {
-            this.sleep(2000);
-            System.out.println("go to sql");
-            DatabaseSQL db = new DatabaseSQL();
-            db.getString("3");
-            updateCallback.updateText();
-            this.sleep(15000);
+
+            db = new DatabaseSQL();
+            String rawansw = db.getString("1");
+            System.out.println("Raw - "  +  rawansw);
+            int answer = Integer.parseInt(rawansw);
+
+            if (answer > mems.size()){
+                updateCallback.updateText();
+                System.out.println(mems.size());
+                gettingUpdates(answer);
+            }else {
             updateCallback.onSucces();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("No need updates - " + mems);
+
+            }
+
+    }
+    public void gettingUpdates(int answer){
+        for (int i = mems.size()+1; i <=answer+1; i++){
+            mems.add(db.getString(Integer.toString(i)));
         }
-
-
+        updateCallback.onSucces();
+        
     }
 }

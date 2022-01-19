@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements UpdateCallback{
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                text.setText("Updated completly");
-                logo.setImageResource(R.drawable.yoba);
+                setContentView(R.layout.memes);
             }
         });
     }

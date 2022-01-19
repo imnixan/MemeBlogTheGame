@@ -10,13 +10,13 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.SQLTimeoutException
-import kotlin.concurrent.thread
+
 
 class DatabaseSQL{
     var connection: Connection? = null
 
-    fun getString(memes : String) {
-        thread {
+    fun getString(memes : String) : String {
+            System.out.println("Starting getString");
             val p = "5432"
 
             try {
@@ -34,28 +34,29 @@ class DatabaseSQL{
 
                 Log.e(this::class.toString(), e.message, e)
             }
-            onClickSelect(memes)
-        }
+
+
+        return getSelect(memes)
     }
 
-    fun onClickSelect(memes : String) {
+    fun getSelect(memes : String) : String {
+
+        var name = ""
         if (connection == null || connection?.isClosed == true) {
 
-            return
+            return ""
         }
 
-        thread {
+
             try {
                 connection!!.createStatement().use { s ->
                     s.executeQuery("SELECT Mem FROM Memes WHERE Id = $memes ").use {
-                        var r = ""
 
                         while (it.next()) {
-                            //val id = it.getInt("Id")
-                            val name = it.getString("Mem")
-                            System.out.println(name)
-                            //r += "${id}: ${name}\n"
-                        }
+                            name = it.getString("Mem")
+
+
+                       }
 
 
                     }
@@ -63,6 +64,8 @@ class DatabaseSQL{
             } catch (e: SQLException) {
                 Log.e(this::class.toString(), e.message, e)
             }
-        }
+
+    return name.toString()
     }
+
 }
