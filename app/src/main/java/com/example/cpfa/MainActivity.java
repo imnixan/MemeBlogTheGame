@@ -1,12 +1,13 @@
 package com.example.cpfa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import static com.example.cpfa.UpdatesChecker.mems;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements UpdateCallback{
         logo = findViewById(R.id.pic);
         Glide.with(this).asGif().load(R.drawable.billy).into(logo);
         text = findViewById(R.id.updates);
-        new UpdatesChecker(this);
+        new UpdatesChecker(this, this);
         display = getWindowManager().getDefaultDisplay();
 
 
@@ -50,13 +51,19 @@ public class MainActivity extends AppCompatActivity implements UpdateCallback{
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setContentView(R.layout.memes);
+
+                Intent intent = new Intent(MainActivity.this, Memes.class);
+                startActivity(intent);
+                finish();
+
             }
         });
     }
 
     @Override
     public void onError() {
-
+        Intent intent = new Intent(MainActivity.this, Memes.class);
+        startActivity(intent);
+        finish();
     }
 }

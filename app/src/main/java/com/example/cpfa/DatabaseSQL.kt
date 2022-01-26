@@ -27,11 +27,11 @@ class DatabaseSQL{
                 )
 
             } catch (e: SQLException) {
-
+                return "0"
 
                 Log.e(this::class.toString(), e.message, e)
             } catch (e: SQLTimeoutException) {
-
+                return "0"
                 Log.e(this::class.toString(), e.message, e)
             }
 
