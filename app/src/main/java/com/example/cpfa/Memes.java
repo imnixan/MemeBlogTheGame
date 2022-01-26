@@ -2,10 +2,15 @@ package com.example.cpfa;
 
 import static com.example.cpfa.UpdatesChecker.mems;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -50,7 +55,20 @@ public class Memes extends AppCompatActivity implements View.OnClickListener {
                 count = 0;
                 System.out.println(mems);
             }
-            mem.setText(mems.get(count));
+        final ObjectAnimator oa1 = ObjectAnimator.ofFloat(mem, "scaleX", 1f, 0f);
+        final ObjectAnimator oa2 = ObjectAnimator.ofFloat(mem, "scaleX", 0f, 1f);
+        oa1.setInterpolator(new DecelerateInterpolator());
+        oa2.setInterpolator(new AccelerateDecelerateInterpolator());
+        oa1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+               mem.setText(mems.get(count));
+                oa2.start();
+
+            }
+        });
+        oa1.start();
 
     }
 }
