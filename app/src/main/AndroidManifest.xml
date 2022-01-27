@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.cpfa">
+    package="com.example.MemBlogGame">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.MemBlogGame.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -26,7 +26,15 @@
         </activity>
 
         <activity
-            android:name=".Memes"
+            android:name="com.example.MemBlogGame.Memes"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.MemBlogGame.MainMenu"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true"/>
+        <activity
+            android:name="com.example.MemBlogGame.Rules"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true"/>
     </application>
